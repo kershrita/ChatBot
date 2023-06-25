@@ -34,6 +34,9 @@ pip install --upgrade sqlalchemy
 ```
 [system path]\anaconda3\Lib\site-packages\chatterbot\storage
 ```
+3. Open the notebook, you can find two separate code. One's for the customized training and the other to train using ready corpus data.
+4. Feel free to post in issues if there is a problem.
+
 ## Usage
 
 The usage of your ChatterBot-based chatbot depends on the specific implementation and the purpose for which you are using it. However, here are some common scenarios and examples of how the chatbot can be used:
