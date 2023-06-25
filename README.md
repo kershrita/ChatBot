@@ -24,16 +24,16 @@ This is a simple chatbot implementation using the ChatterBot library in Python. 
 To get started with the chatbot, follow these steps:
 
 1. Install the necessary libraries.
-'''
+```
 pip install nltk chatterbot spacy
-'''
-'''
+```
+```
 pip install --upgrade sqlalchemy
-'''
+```
 2. Take [sql_storage.py](sql_storage.py) file to this path.
-'''
+```
 [system path]\anaconda3\Lib\site-packages\chatterbot\storage
-'''
+```
 ## Usage
 
 The usage of your ChatterBot-based chatbot depends on the specific implementation and the purpose for which you are using it. However, here are some common scenarios and examples of how the chatbot can be used:
