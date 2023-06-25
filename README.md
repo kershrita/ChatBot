@@ -36,6 +36,7 @@ pip install --upgrade sqlalchemy
 ```
 3. Open the notebook, you can find two separate code. One's for the customized training and the other to train using ready corpus data.
 4. Feel free to post in issues if there is a problem.
+5. [ChatterBot Documentation](https://chatterbot.readthedocs.io/en/stable/index.html).
 
 ## Usage
 
