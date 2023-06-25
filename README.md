@@ -21,7 +21,11 @@ This is a simple chatbot implementation using the ChatterBot library in Python. 
 
 ## Getting Started
 
-To get started with the chatbot, follow these steps:
+To get started with the chatbot, you can watch this tutorial video:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qextOtQr1Ac" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+or just follow this steps:
 
 1. Install the necessary libraries.
 ```
