@@ -1,77 +1,119 @@
-# ChatBot
+# ChatBot: Conversational AI with Persistent SQL Memory
 
-This is a simple chatbot implementation using the ChatterBot library in Python. The chatbot is designed to engage in conversations with users, providing pre-defined responses based on the training data.
+> A Chatbot system that combines configurable training pipelines with SQL-backed conversation memory for repeatable, domain-adaptable dialogue workflows.
 
-## Table of Contents
+## Overview
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Features](#features)
-- [Configuration](#configuration)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+This project implements an end-to-end conversational AI workflow using ChatterBot, designed for practical assistant use cases where response quality and persistence matter more than one-off notebook demos.
 
-## Installation
+It focuses on:
+- Training flexibility (custom conversation lists and corpus-driven training)
+- Stateful conversation storage via SQL adapter
+- Configurable inference behavior through logic adapter composition
 
-1. Clone or Download the repository to your local machine using the following command:
-```
-git clone https://github.com/kershrita/ChatBot.git
-```
-2. Install the necessary libraries.
-```
-pip install nltk chatterbot spacy
-```
-```
-pip install --upgrade sqlalchemy
-```
-3. Take [sql_storage.py](sql_storage.py) file to this path.
-```
-[system path]\anaconda3\Lib\site-packages\chatterbot\storage
-```
+Real-world use cases:
+- FAQ assistants for internal teams
+- Lightweight customer-support copilots for SMB products
+- Prototype conversational interfaces before moving to larger LLM stacks
 
-## Usage
+## Architecture
 
-1. Open the notebook, you can find two separate code. One's for the customized training and the other to train using ready corpus data.
-2. Feel free to post in issues if there is a problem.
-3. You can watch this for more description [tutorial video](https://www.youtube.com/watch?v=qextOtQr1Ac)
+The system follows a modular inference pipeline:
+
+`User Input -> Text Processing -> Logic Adapters -> Response Selection -> SQL Storage -> Bot Response`
+
+Core components:
+- **Input Layer**: Interactive CLI loop captures user prompts and session flow.
+- **Training Layer**: Supports both `ListTrainer` (domain-specific seed dialogs) and `ChatterBotCorpusTrainer` (broad language corpus).
+- **AI Layer**: Uses `BestMatch` and `MathematicalEvaluation` logic adapters for intent matching and deterministic math handling.
+- **Persistence Layer**: SQL-backed statement store retains dialogue state and enables incremental learning workflows.
+- **Output Layer**: Returns ranked responses in an interactive conversational loop.
+
+Design decisions:
+- **Dual training strategy** to balance domain precision and general coverage.
+- **Adapter-based inference** for controlled behavior instead of monolithic black-box generation.
+- **Persistent storage** to keep conversation continuity across runs.
+
+### Architecture Diagram
+
+![ChatBot Architecture Flowchart](./assets/ChatBot%20Architecture%20Flowchart.png)
+
+Figure: End-to-end chatbot flow showing user input processing, logic adapter routing, training pathways, response generation, and SQL-backed persistence.
 
 ## Features
 
-- **Natural Language Processing**: The chatbot utilizes natural language processing techniques to understand user input and generate appropriate responses.
-- **Pre-trained Models**: The chatbot comes with pre-trained language models that provide a starting point for conversations.
-- **Ready Corpus**: It's also comes with a different language corpus data, you can find it [here](https://github.com/gunthercox/chatterbot-corpus).
-- **Customizable Training**: You can train the chatbot with your own conversational data to make it more specific to your use case.
-- **Multiple Logic Adapters**: The chatbot supports multiple logic adapters that handle different aspects of conversation generation, such as mathematical calculations, sentiment analysis, or fallback responses.
-- **Storage Adapter**: The chatbot uses a storage adapter to persist conversation data, allowing you to resume conversations and track user interactions.
+- Configurable chatbot instance with pluggable logic adapters
+- Two training modes for fast experimentation and broader language coverage
+- SQL persistence for reusable conversation memory
+- Interactive runtime loop for rapid behavior validation
+- Custom storage adapter implementation to improve SQL backend reliability
 
-## Configuration
+## Technical Highlights
 
-The chatbot's behavior and training data can be customized:
+- Built around an explicit system pipeline rather than a single script execution path.
+- Includes a custom SQL storage adapter (`sql_storage.py`) with SQLite runtime tuning (`PRAGMA journal_mode=WAL`, `synchronous=NORMAL`) for safer concurrent access and improved write behavior.
+- Uses model abstraction (`Statement`, `Tag`, session lifecycle methods) to keep data operations structured and maintainable.
+- Separates training concerns (data preparation) from inference concerns (logic adapter response generation), which supports cleaner production migration.
 
-- **Customer Support**: Provide automated support and answer frequently asked questions.
-- **Information Retrieval**: Fetch and provide information on weather, news, or general knowledge.
-- **Language Practice**: Engage users in language learning conversations and offer feedback.
-- **Product Recommendations**: Assist users in finding relevant products based on their preferences.
-- **Virtual Assistant**: Help users with tasks like reminders, scheduling, and calendar management.
-- **Entertainment and Engagement**: Engage users with jokes, trivia games, and personalized recommendations.
+## Tech Stack
 
-## Documentation
+- Python
+- ChatterBot
+- NLTK
+- spaCy
+- SQLAlchemy
+- SQLite
+- Jupyter Notebook (experimentation and iteration)
 
-- **[ChatterBot](https://chatterbot.readthedocs.io/en/stable/index.html)**: is a Python library that enables developers to create chatbots with natural language processing capabilities. It provides a simple and flexible framework for building conversational agents that can engage in interactive conversations.
+## Getting Started
 
-## Contributing
+### 1) Clone Repository
 
-Contributions are welcome! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
+```bash
+git clone https://github.com/kershrita/ChatBot.git
+cd ChatBot
+```
 
+### 2) Install Dependencies
+
+```bash
+pip install chatterbot nltk spacy
+pip install --upgrade sqlalchemy
+```
+
+### 3) Apply Custom SQL Storage Adapter
+
+This repository includes a custom storage adapter implementation in `sql_storage.py`.
+
+Copy it to your local ChatterBot storage path (example for Anaconda on Windows):
+
+```text
+[python-install-path]\Lib\site-packages\chatterbot\storage\sql_storage.py
+```
+
+### 4) Run the Notebook Workflow
+
+Open `chatbot.ipynb` and execute:
+- Custom list training flow for domain-specific bootstrapping
+- Corpus training flow for broader conversational coverage
+- Interactive chat loop (`exit` to stop)
+
+## Results
+
+Current project outcomes:
+- Validated end-to-end chatbot pipeline from training to live response loop
+- Demonstrated persistent conversational storage using SQL backend
+- Verified mixed reasoning behavior through logic adapters (best-match + mathematical evaluation)
+
+Example interaction pattern:
+
+```text
+User: Hello
+Bot: Hi there!
+```
+
+> Note: Quantitative evaluation metrics (e.g., response relevance score, fallback rate, latency distribution) are not yet benchmarked in this repository and are a recommended next step for production hardening.
 
 ## License
 
-Chatbot is released under the [MIT License](LICENSE).
-
-## Contact
-
-- Mail: ashrafabdulkhaliq80@gmail.com
-- LinkedIn: https://www.linkedin.com/in/ashraf-abdulkhaliq
-- GitHub: https://github.com/kershrita
+Released under the MIT License. See [LICENSE](LICENSE).
